@@ -60,6 +60,26 @@ def get_active_record_by_scan(barcode: str, db: Session = Depends(get_db)):
     # Return record with item and user details
     return db_record
 
+@record_router.get("/item", response_model=Optional[RecordDetailResponse])
+def get_active_record_by_id(id: int, db: Session = Depends(get_db)):
+    # Find the item by barcode
+    db_item = db.query(Item).filter(Item.id == id).first()
+    if db_item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
+    # Get the active record for this item
+    db_record = db.query(Record).filter(
+        Record.item_id == db_item.id,
+        Record.status == "active"
+    ).first()
+    
+    # If no active record exists, return None
+    if db_record is None:
+        return None
+    
+    # Return record with item and user details
+    return db_record
+
 @record_router.put("/{record_id}/complete", response_model=RecordResponse)
 def complete_record(record_id: int, db: Session = Depends(get_db)):
     db_record = db.query(Record).filter(Record.id == record_id).first()
@@ -84,7 +104,7 @@ def cancel_record(record_id: int, db: Session = Depends(get_db)):
     db.refresh(db_record)
     return db_record
 
-@record_router.get("/", response_model=List[RecordResponse])
+@record_router.get("/", response_model=List[RecordDetailResponse])
 def get_records(
     status: Optional[str] = None,
     user_id: Optional[int] = None,

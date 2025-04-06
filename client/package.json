@@ -1,0 +1,51 @@
+{
+	"name": "react-interface",
+	"version": "0.1.0",
+	"private": true,
+	"devDependencies": {
+		"react-scripts": "5.0.1"
+	},
+	"dependencies": {
+		"@dnd-kit/core": "^6.0.8",
+		"@dnd-kit/modifiers": "^6.0.1",
+		"@emotion/styled": "^11.11.0",
+		"@mui/icons-material": "^5.14.9",
+		"@mui/lab": "^5.0.0-alpha.165",
+		"@mui/material": "^5.14.10",
+		"@mui/x-charts": "^6.19.5",
+		"@mui/x-data-grid": "^6.15.0",
+		"@nivo/bar": "^0.83.0",
+		"@syncfusion/ej2-react-gantt": "^23.1.36",
+		"axios": "^1.7.9",
+		"flume": "^1.0.4",
+		"gantt-schedule-timeline-calendar": "^3.35.2",
+		"papaparse": "^5.4.1",
+		"react": "^18.2.0",
+		"react-barcode": "^1.4.6",
+		"react-dom": "^18.2.0",
+		"react-draggable": "^4.4.6",
+		"react-pro-sidebar": "^0.7.1",
+		"react-router-dom": "^6.16.0",
+		"use-react-screenshot": "^4.0.0"
+	},
+	"main": "src/electron-starter.js",
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"homepage": "./"
+}

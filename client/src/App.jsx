@@ -1,0 +1,76 @@
+import React, { useState, useRef } from 'react';
+import { Routes, Route } from "react-router-dom";
+import { CssBaseline, ThemeProvider, Box } from "@mui/material";
+import { ColorModeContext, useMode } from "./theme";
+import './App.css';
+
+// Context Providers
+import { HeadProvider } from './context/HeadContext';
+import { SnackBarProvider } from './context/SnackBarContext';
+
+// Hooks
+import { useScreenshot } from 'use-react-screenshot';
+
+// Components
+import Sidebar from "./scenes/global/sidebar";
+import Topbar from "./scenes/global/topbar";
+import Dashboard from './scenes/dashboard/dashboard';
+import Item from './scenes/item/item';
+import AssignItem from './scenes/item/assign';
+
+const App = () => {
+  // Theme and color mode
+  const [theme, colorMode] = useMode();
+
+  // State management
+  const [headerData, setHeaderData] = useState({ location: ["FrNet", "Dashboard"] });
+  const [expanded, setExpanded] = useState(false);
+  const [snackText, setSnackText] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Screenshot functionality
+  const appRef = useRef(null);
+  const [image, takeScreenshot] = useScreenshot();
+
+  return (
+    <HeadProvider value={{ data: headerData, setData: setHeaderData, expanded }}>
+      <SnackBarProvider value={{ text: snackText, setText: setSnackText }}>
+        <ColorModeContext.Provider value={colorMode}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box
+              className="App"
+              display="flex"
+              height="100%"
+              ref={appRef}
+            >
+              <Sidebar setExpanded={setExpanded} />
+              <Box>
+                <Topbar />
+                <Box
+                  className="content"
+                  style={{
+                    padding: "25px",
+                    width: `calc(100vw - ${expanded ? '85px' : '275px'})`,
+                    minHeight: "calc(100vh - 54px)"
+                  }}
+                  display="flex"
+                  flexDirection="column"
+                >
+                  <Routes>
+                    {/* Routes will be added here */}
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/item/:id" element={<Item />} />
+                    <Route path="/item/:id/assign" element={<AssignItem />} />
+                  </Routes>
+                </Box>
+              </Box>
+            </Box>
+          </ThemeProvider>
+        </ColorModeContext.Provider>
+      </SnackBarProvider>
+    </HeadProvider>
+  );
+};
+
+export default App;
