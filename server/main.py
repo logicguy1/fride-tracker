@@ -25,6 +25,10 @@ from api.v1.users.adapter import user_router
 
 app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
 
+from api.v1.records.adapter import record_router
+
+app.include_router(record_router, prefix="/api/v1/records", tags=["Records"])
+
 
 if __name__ == "__main__":
     import uvicorn
