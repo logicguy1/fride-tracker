@@ -44,19 +44,20 @@ const App = () => {
               height="100%"
               ref={appRef}
             >
-              <Sidebar setExpanded={setExpanded} />
+              {/*<Sidebar setExpanded={setExpanded} />*/}
               <Box>
-                <Topbar />
-                <Box
-                  className="content"
-                  style={{
-                    padding: "25px",
-                    width: `calc(100vw - ${expanded ? '85px' : '275px'})`,
-                    minHeight: "calc(100vh - 54px)"
-                  }}
-                  display="flex"
-                  flexDirection="column"
-                >
+                <Topbar drawerOpen={expanded} setDrawerOpen={setExpanded} />
+                <Box component="main" sx={{
+                  flexGrow: 1,
+                  p: 3,
+                  mt: '52px', // Height of AppBar
+                  width: { sm: `calc(100vw - ${expanded ? '240px' : '0px'})` },
+                  ml: { sm:expanded ? '240px' : '0px' },
+                  transition: theme.transitions.create(['margin', 'width'], {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen,
+                  }),
+                }}>
                   <Routes>
                     {/* Routes will be added here */}
                     <Route path="/" element={<Dashboard />} />
