@@ -13,17 +13,17 @@ const Scanbox = () => {
   const [loading, setLoading] = useState(false);
 
   const barcodeCallback = async (barcode) => {
-      try {
-        setLoading(true);
-        const endpoint = `/v1/items/scan?barcode=${barcode}`;
-        const data = await makeRequest(endpoint, 'get');
-        console.log(data);
-        navigate(`/item/${data.id}`);
-      } catch (error) {
-        // Error handling is managed by useNetwork hook
-      } finally {
-        setLoading(false);
-      }
+    try {
+      setLoading(true);
+      const endpoint = `/v1/items/scan?barcode=${barcode}`;
+      const data = await makeRequest(endpoint, 'get');
+      console.log(data);
+      navigate(`/item/${data.id}`);
+    } catch (error) {
+      // Error handling is managed by useNetwork hook
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSearch = () => {

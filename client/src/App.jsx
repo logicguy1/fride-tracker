@@ -18,6 +18,9 @@ import Dashboard from './scenes/dashboard/dashboard';
 import Item from './scenes/item/item';
 import AssignItem from './scenes/item/assign';
 
+import Recipe from './scenes/recipe/recipe';
+import RecipeList from './scenes/recipe/recipeList';
+
 const App = () => {
   // Theme and color mode
   const [theme, colorMode] = useMode();
@@ -63,6 +66,8 @@ const App = () => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/item/:id" element={<Item />} />
                     <Route path="/item/:id/assign" element={<AssignItem />} />
+                    <Route path="/recipes" element={<RecipeList />} />
+                    <Route path="/recipe/:id" element={<Recipe />} />
                   </Routes>
                 </Box>
               </Box>
