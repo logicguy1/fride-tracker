@@ -32,16 +32,16 @@ app.add_middleware(
 
 # Setup FastAPI routes
 from api.v1.items.adapter import item_router
-
 app.include_router(item_router, prefix="/api/v1/items", tags=["Items"])
 
 from api.v1.users.adapter import user_router
-
 app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
 
 from api.v1.records.adapter import record_router
-
 app.include_router(record_router, prefix="/api/v1/records", tags=["Records"])
+
+from api.v1.recipes.adapter import recipe_router
+app.include_router(recipe_router, prefix="/api/v1/recipes", tags=["Recipes"])
 
 
 if __name__ == "__main__":
