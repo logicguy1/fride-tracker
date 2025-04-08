@@ -58,7 +58,7 @@ const ResponsiveAppBar = ({ drawerOpen, setDrawerOpen }) => {
       <AppBar 
         position="fixed" 
         sx={{
-          backgroundColor: theme.palette.mode === 'dark' ? colors.primary[500] : "#fcfcfc",
+          backgroundColor: theme.palette.background.paper,
           color: theme.palette.text.primary,
           boxShadow: 1,
           zIndex: theme.zIndex.drawer + 1
@@ -68,8 +68,9 @@ const ResponsiveAppBar = ({ drawerOpen, setDrawerOpen }) => {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
+          height="100%"
           p={1}
-          pl={2}
+          pl={5}
           pr={2}
         >
           {/* MENU BUTTON AND TITLE */}
@@ -143,7 +144,7 @@ const ResponsiveAppBar = ({ drawerOpen, setDrawerOpen }) => {
               >
                 <ListItemButton>
                   <ListItemIcon sx={{ 
-                    color: theme.palette.mode === 'dark' ? colors.grey[100] : colors.grey[700]
+                    color: theme.palette.text.secondary
                   }}>
                     {item.icon}
                   </ListItemIcon>
@@ -153,25 +154,6 @@ const ResponsiveAppBar = ({ drawerOpen, setDrawerOpen }) => {
             ))}
           </List>
           
-          <Divider />
-          
-          {/* Bottom menu items */}
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => {
-                // Handle logout
-                navigate('/login');
-                setDrawerOpen(false);
-              }}>
-                <ListItemIcon sx={{ 
-                  color: theme.palette.mode === 'dark' ? colors.grey[100] : colors.grey[700]
-                }}>
-                  <LogoutOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Logout" />
-              </ListItemButton>
-            </ListItem>
-          </List>
         </Box>
       </Drawer>
     </>

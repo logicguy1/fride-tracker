@@ -49,7 +49,7 @@ const RecipeCard = ({ recipe }) => {
           sx={{ objectFit: 'cover' }}
         />
         <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+          <Typography gutterBottom variant="h6" component="div" sx={{ fontWeight: 550 }}>
             {recipe.name}
           </Typography>
           

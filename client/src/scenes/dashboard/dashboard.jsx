@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 
 import ActiveGrid from "../../components/data-display/activeList";
 import ScanBox from "../../components/common/scanbox";
@@ -7,10 +7,10 @@ import ScanBox from "../../components/common/scanbox";
 const UsersPage = () => {
 
   return (
-    <Box p={2}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <ScanBox />
       <ActiveGrid />
-    </Box>
+    </Container>
   );
 };
 

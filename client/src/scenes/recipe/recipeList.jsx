@@ -60,7 +60,7 @@ const RecipePage = () => {
     <Container maxWidth="lg" sx={{ py: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 3 }}>
-          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 500 }}>
             Daily Recipes
           </Typography>
           <Typography variant="h6" component="h2">

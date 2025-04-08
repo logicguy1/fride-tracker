@@ -94,6 +94,7 @@ const ItemActivities = ({ item_id }) => {
         paginationMode="server"
         getRowId={(row) => row.id}
         disableRowSelectionOnClick
+        density='compact'
       />
     </Box>
   );

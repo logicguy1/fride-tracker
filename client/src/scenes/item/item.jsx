@@ -9,7 +9,8 @@ import {
   Chip,
   IconButton,
   CircularProgress,
-  Alert
+  Alert,
+  Container
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -151,7 +152,13 @@ const Item = () => {
           }}
         >
           <Typography>The box is not currently in use.</Typography>
-          <Button variant="contained" size="small" onClick={handleAssign}>Assign</Button>
+          <Button 
+            variant="contained" 
+            size="medium" 
+            onClick={handleAssign}
+          >
+            Assign
+          </Button>
         </Alert>
       );
     }
@@ -244,12 +251,12 @@ const Item = () => {
   };
 
   return (
-    <Box p={2}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <ScanBox id={id} />
       <Typography variant="h6" gutterBottom>Box Details</Typography>
       {renderContent()}
       <ItemActivities item_id={id} />
-    </Box>
+    </Container>
   );
 };
 

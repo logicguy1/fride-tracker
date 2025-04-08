@@ -53,6 +53,7 @@ const UserGrid = () => {
         paginationMode="server"
         getRowId={(row) => row.id}
         disableRowSelectionOnClick
+        density='compact'
       />
     </Box>
   );
