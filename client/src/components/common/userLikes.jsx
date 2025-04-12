@@ -61,17 +61,6 @@ const UserLikes = () => {
 
   return (
     <Container maxWidth="lg">
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 5, mt: 7 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 3 }}>
-          <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 500 }}>
-            User Liked Recipes
-          </Typography>
-          <Typography variant="h6" component="h2">
-            {loading ? 'Loading...' : ``}
-          </Typography>
-        </Box>
-      </Box>
-      
       {userData.length === 0 ? (
         <Typography variant="body1">No user data available.</Typography>
       ) : (
