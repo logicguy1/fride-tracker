@@ -7,7 +7,7 @@ import StatusChip from '../common/statusChip';
 const ItemActivities = ({ item_id }) => {
   const [users, setUsers] = useState([]);
   const [paginationModel, setPaginationModel] = useState({
-    pageSize: 10,
+    pageSize: 100,
     page: 0,
   });
   const [loading, setLoading] = useState(false);
@@ -87,7 +87,7 @@ const ItemActivities = ({ item_id }) => {
         columns={columns}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[5, 10, 25]}
+        pageSizeOptions={[50, 100, 500]}
         rowCount={rowCount}
         loading={loading}
         pagination
