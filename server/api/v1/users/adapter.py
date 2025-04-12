@@ -56,4 +56,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     db.commit()
     return db_user
 
+from api.v1.users.like_adapter import like_router
+user_router.include_router(like_router, prefix="", tags=["Likes"])
+
 __all__ = ["user_router"]

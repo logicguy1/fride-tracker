@@ -3,31 +3,17 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 
 from core.dependencies.get_db import get_db
+from core.db.models.user import User
 from .services.recipe_service import RecipeService
-from .request.recipe import RecipeSearchRequest, RecipeCreateRequest, RecipeUpdateRequest
-from .response.recipe import RecipeResponse, RecipeListResponse
+from .services.recipe_like_service import RecipeLikeService
+from .request.recipe import RecipeSearchRequest
+from .response.recipe import RecipeResponse, RecipeListResponse, RecipeLikeResponse, UserLikedRecipesResponse, AllUserLikesResponse
 
 recipe_router = APIRouter()
 recipe_service = RecipeService()
+recipe_like_service = RecipeLikeService()
 
 # API endpoints
-@recipe_router.get("/daily", response_model=RecipeListResponse)
-async def get_daily_recipes(db: Session = Depends(get_db)):
-    """Get the current 10 daily recipes"""
-    recipes = recipe_service.get_daily_recipes(db)
-    
-    # If no daily recipes exist yet, create them
-    if not recipes:
-        recipes = await recipe_service.refresh_daily_recipes(db)
-    
-    return {"recipes": recipes}
-
-@recipe_router.post("/daily/refresh", response_model=RecipeListResponse)
-async def refresh_daily_recipes(db: Session = Depends(get_db)):
-    """Refresh the daily recipes with 10 new random recipes"""
-    recipes = await recipe_service.refresh_daily_recipes(db)
-    return {"recipes": recipes}
-
 @recipe_router.post("/search", response_model=RecipeListResponse)
 def search_recipes_post(
     search_params: RecipeSearchRequest,
@@ -59,14 +45,6 @@ def search_recipes(
     )
     return {"recipes": recipes}
 
-@recipe_router.get("/{recipe_id}", response_model=RecipeResponse)
-def get_recipe(recipe_id: int, db: Session = Depends(get_db)):
-    """Get a specific recipe by ID"""
-    recipe = recipe_service.get_recipe_by_id(db, recipe_id)
-    if recipe is None:
-        raise HTTPException(status_code=404, detail="Recipe not found")
-    return recipe
-
 @recipe_router.get("/meal/{meal_id}", response_model=RecipeResponse)
 def get_recipe_by_meal_id(meal_id: str, db: Session = Depends(get_db)):
     """Get a specific recipe by its meal ID from TheMealDB"""
@@ -75,5 +53,33 @@ def get_recipe_by_meal_id(meal_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Recipe not found")
     return recipe
 
+@recipe_router.get("/daily", response_model=RecipeListResponse)
+async def get_daily_recipes(db: Session = Depends(get_db)):
+    """Get the current 10 daily recipes"""
+    recipes = recipe_service.get_daily_recipes(db)
+    
+    # If no daily recipes exist yet, create them
+    if not recipes:
+        recipes = await recipe_service.refresh_daily_recipes(db)
+    
+    return {"recipes": recipes}
+
+@recipe_router.post("/daily/refresh", response_model=RecipeListResponse)
+async def refresh_daily_recipes(db: Session = Depends(get_db)):
+    """Refresh the daily recipes with 10 new random recipes"""
+    recipes = await recipe_service.refresh_daily_recipes(db)
+    return {"recipes": recipes}
+
+@recipe_router.get("/{recipe_id}", response_model=RecipeResponse)
+def get_recipe(recipe_id: int, db: Session = Depends(get_db)):
+    """Get a specific recipe by ID"""
+    recipe = recipe_service.get_recipe_by_id(db, recipe_id)
+    if recipe is None:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    return recipe
+
+
+from api.v1.recipes.like_adapter import like_router
+recipe_router.include_router(like_router, prefix="", tags=["Likes"])
 
 __all__ = ["recipe_router"]

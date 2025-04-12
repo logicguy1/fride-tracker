@@ -6,6 +6,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import RecipeGrid from '../../components/common/recipeGrid';
+import UserLikes from '../../components/common/userLikes';
 import RefreshButton from '../../components/common/refreshButton';
 import { useNetwork } from '../../hooks/useNetwork';
 
@@ -75,6 +76,7 @@ const RecipePage = () => {
         loading={loading}
         error={error}
       />
+      <UserLikes />
     </Container>
   );
 };

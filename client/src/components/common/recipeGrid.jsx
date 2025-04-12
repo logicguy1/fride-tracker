@@ -22,7 +22,7 @@ const RecipeCarousel = ({ recipes, loading, error }) => {
   if (!recipes || recipes.length === 0) {
     return (
       <Box sx={{ py: 4, textAlign: 'center' }}>
-        <Typography>No recipes found. Try different search criteria.</Typography>
+        <Typography>No recipes found.</Typography>
       </Box>
     );
   }

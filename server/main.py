@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import datetime
 
-from core.db.models import Item, User, Record
+from core.db.models import Item, User, Record, RecipeLike
 from core.db.session import Base, engine, SessionLocal
 
 # Create the database tables
