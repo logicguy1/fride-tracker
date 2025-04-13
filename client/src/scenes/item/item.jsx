@@ -17,12 +17,16 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import EventIcon from '@mui/icons-material/Event';
 import ScanBox from "../../components/common/scanbox";
+import StatusChip from "../../components/common/statusChip";
 import ItemActivities from "../../components/data-display/itemActivities";
 
 import { useNetwork } from '../../hooks/useNetwork';
 import { useNavigate } from "react-router-dom";
 
-import { capitalizeFirstLetter } from '../../utils/strings/capitalizeFirst';
+import InfoBox from './item/infobox';
+
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme.js";
 
 const Item = () => {
   const { id } = useParams();
@@ -31,6 +35,9 @@ const Item = () => {
   const { makeRequest } = useNetwork();
   const [loading, setLoading] = useState(false);
   const [dataNotFound, setDataNotFound] = useState(false);
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   // State for box data with correct structure
   const [boxData, setBoxData] = useState({
@@ -64,10 +71,10 @@ const Item = () => {
   // Format expiry date
   const formatExpiryDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
@@ -102,7 +109,7 @@ const Item = () => {
       // Use the complete endpoint as per API documentation
       const endpoint = `/v1/records/${boxData.id}/complete`;
       await makeRequest(endpoint, 'put');
-      
+
       // Refresh data after completing the record
       const updatedData = await makeRequest(`/v1/records/item?id=${id}`, 'get');
       if (updatedData !== null) {
@@ -133,10 +140,10 @@ const Item = () => {
 
     if (dataNotFound) {
       return (
-        <Alert 
-          severity="info" 
-          sx={{ 
-            mt: 2, 
+        <Alert
+          severity="info"
+          sx={{
+            mt: 2,
             mb: 2,
             borderRadius: 2,
             display: 'flex',
@@ -152,9 +159,9 @@ const Item = () => {
           }}
         >
           <Typography>The box is not currently in use.</Typography>
-          <Button 
-            variant="contained" 
-            size="medium" 
+          <Button
+            variant="contained"
+            size="medium"
             onClick={handleAssign}
           >
             Assign
@@ -162,91 +169,9 @@ const Item = () => {
         </Alert>
       );
     }
-    
 
     return (
-      <Paper
-        elevation={0}
-        sx={{
-          p: 3,
-          mt: 2,
-          mb: 2,
-          borderRadius: 2,
-          bgcolor: 'rgb(232, 244, 252)', // Light blue background
-          border: '1px solid rgb(168, 212, 248)' // Blue border
-        }}
-      >
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1" fontWeight="bold">
-              SN: {boxData.item.sn}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Box display="flex" alignItems="center">
-              <Typography variant="body1">
-                Status:
-              </Typography>
-              <Chip
-                label={capitalizeFirstLetter(boxData.status)}
-                size="small"
-                sx={{
-                  ml: 1,
-                  bgcolor: boxData.status === 'active' ? 'rgb(46, 204, 113)' : 'rgb(149, 165, 166)',
-                  color: 'white',
-                  fontWeight: 'bold'
-                }}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Box display="flex" alignItems="center">
-              <PersonOutlineIcon sx={{ mr: 1, color: 'text.secondary' }} />
-              <Typography variant="body1">
-                Owner: <Box component="span" fontWeight="bold">{boxData.owner.name}</Box>
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Box display="flex" alignItems="center">
-              <AccessTimeIcon sx={{ mr: 1, color: 'text.secondary' }} />
-              <Typography variant="body1">
-                Age: <Box component="span" fontWeight="bold">{calculateAge(boxData.created)}</Box>
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Box display="flex" alignItems="center">
-              <EventIcon sx={{ mr: 1, color: 'text.secondary' }} />
-              <Typography variant="body1">
-                Expires: <Box component="span" fontWeight="bold">{formatExpiryDate(boxData.expires)}</Box>
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Box display="flex" justifyContent="flex-end">
-              <Button
-                variant="contained"
-                startIcon={<DeleteOutlineIcon />}
-                disabled={loading || boxData.status !== 'active'}
-                sx={{
-                  bgcolor: 'rgb(231, 76, 60)', // Red color
-                  '&:hover': {
-                    bgcolor: 'rgb(192, 57, 43)' // Darker red on hover
-                  }
-                }}
-                onClick={handleFreeBox}
-              >
-                Free Box
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
-      </Paper>
+      <InfoBox boxData={boxData} />
     );
   };
 
@@ -254,7 +179,11 @@ const Item = () => {
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <ScanBox id={id} />
       <Typography variant="h6" gutterBottom>Box Details</Typography>
+      <Box mb={2} />
       {renderContent()}
+      <Box mb={7} />
+      <Typography variant="h6" gutterBottom>History</Typography>
+      <Box mb={2} />
       <ItemActivities item_id={id} />
     </Container>
   );
