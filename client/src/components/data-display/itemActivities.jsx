@@ -65,7 +65,7 @@ const ItemActivities = ({ item_id }) => {
         expires: entry.expires,
         status: entry.status,
         owner: entry.owner.name,
-      }));
+      })).reverse();
 
       setUsers(mappedData);
       setRowCount(data.length); // Update if API gives total count
