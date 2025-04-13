@@ -15,7 +15,21 @@ code {
 html, body, #root {
   /*height: 100%;*/
   width: 100%;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('../public/fonts/SourceSans3-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('../public/fonts/SourceSans3-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-style: italic;
 }
 
 .app {
