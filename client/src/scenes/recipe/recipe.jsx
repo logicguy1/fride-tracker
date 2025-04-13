@@ -26,6 +26,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import LinkIcon from '@mui/icons-material/Link';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 
+import QRCodeModal from '../../components/modals/qrcodemodal';
 import { useNetwork } from '../../hooks/useNetwork';
 
 const RecipeDetailPage = () => {
@@ -35,6 +36,19 @@ const RecipeDetailPage = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // QR Code modal state
+  const [qrModalOpen, setQrModalOpen] = useState(false);
+  const [qrData, setQrData] = useState({ url: '', title: '' });
+
+  const handleOpenQrModal = (url, title) => {
+    setQrData({ url, title });
+    setQrModalOpen(true);
+  };
+
+  const handleCloseQrModal = () => {
+    setQrModalOpen(false);
+  };
 
   useEffect(() => {
     // In a real application, you would fetch the specific recipe
@@ -150,10 +164,7 @@ const RecipeDetailPage = () => {
                       variant="outlined"
                       color="error"
                       startIcon={<YouTubeIcon />}
-                      component={Link}
-                      href={recipe.youtube_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => handleOpenQrModal(recipe.youtube_url, 'YouTube Video Tutorial')}
                     >
                       Watch Video
                     </Button>
@@ -163,10 +174,7 @@ const RecipeDetailPage = () => {
                     <Button
                       variant="outlined"
                       startIcon={<LinkIcon />}
-                      component={Link}
-                      href={recipe.source}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => handleOpenQrModal(recipe.source, 'Recipe Source')}
                     >
                       Source
                     </Button>
@@ -220,9 +228,9 @@ const RecipeDetailPage = () => {
                             color: 'white',
                             borderRadius: '50%',
                             minWidth: 28,
-                            minHeight:28,
+                            minHeight: 28,
                             maxWidth: 28,
-                            maxHeight:28,
+                            maxHeight: 28,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -241,6 +249,14 @@ const RecipeDetailPage = () => {
           </Paper>
         </Grid>
       </Grid>
+
+      {/* QR Code Modal */}
+      <QRCodeModal 
+        open={qrModalOpen} 
+        handleClose={handleCloseQrModal} 
+        url={qrData.url} 
+        title={qrData.title} 
+      />
     </Container>
   );
 };
